@@ -48,8 +48,8 @@ func main() {
 		c.JSON(http.StatusOK, tables)
 	})
 	r.POST("/api/boards", func(c *gin.Context) {
-		var question board
-		if err := c.ShouldBindJSON(&question); err != nil {
+		var msg board
+		if err := c.ShouldBindJSON(&msg); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"message": err.Error(),
 			})
@@ -59,7 +59,7 @@ func main() {
 		ctx, cancel := context.WithTimeout(c.Request.Context(), 3*time.Second)
 		defer cancel()
 
-		_, err = db.ExecContext(ctx, "INSERT INTO webboard(name,message) VALUES(?,?)", question.Name, question.Message)
+		_, err = db.ExecContext(ctx, "INSERT INTO webboard(name,message) VALUES(?,?)", msg.Name, msg.Message)
 		if err != nil {
 			slog.Error(err.Error())
 			c.JSON(http.StatusBadRequest, gin.H{
