@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Board</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://unpkg.com/htmx.org@2.0.2"
+        integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/json-enc.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
+</head>
+
+<body>
+    <div class="grid text-center"><div class="row justify-content-md-center"><div class="col col-lg-4">
+        <h1>Web Board</h1>
+
+        <div hx-ext="client-side-templates">
+
+            <p id="content" hx-get="/api/boards"
+                hx-swap="innerHTML"
+                hx-trigger="load"
+                mustache-array-template="board">Board</p>
+            <template id="board">
+                {{#data}}
+                    <div class="card text-bg-light mb-3">
+                        <div class="card-body">
+                            <p class="card-text text-start">{{message}}</p>
+                        </div>
+                        <footer class="blockquote-footer">{{name}}
+                            <!-- <button type="button" class="btn btn-trash">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                    <path
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                </svg>
+                            </button> -->
+                        </footer>
+                    </div>
+                {{/data}}
+            </template>
+
+            <div class="container p-4 bg-info bg-opacity-10 border border-info border-start-2 rounded-end">
+                <form  class="row g-1"
+                    hx-post="/api/boards"
+                    hx-swap="innerHTML"
+                    hx-target="#content"
+                    hx-ext="json-enc"
+                    mustache-array-template="board">    
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Leave a comment here" name="message" id="message"></textarea>
+                        <label for="floatingTextarea">Message</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input lass="form-text" type="text" class="form-control" name="name" id="name" placeholder="name" required>
+                        <label for="floatingInput">Name</label>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Post</button>
+                </form>
+            </div>
+
+        </div>
+    </div></div></div>
+
+</body>
+
+</html>
