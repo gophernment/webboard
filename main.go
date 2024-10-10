@@ -12,6 +12,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
+	// _ "modernc.org/sqlite" // windows
 )
 
 func main() {
